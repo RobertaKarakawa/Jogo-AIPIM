@@ -1,0 +1,91 @@
+body {
+
+    background-color: blueviolet;
+    font-family: Arial;
+
+}
+
+.texto {
+
+    text-align: center;
+    padding: 25px;
+
+}
+
+.cartas {
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+
+    justify-content: center;
+
+    margin-top: 40px;
+
+}
+
+.carta {
+
+    width: 150px;
+    height: 100px;
+
+    background-color: white;
+
+    border-radius: 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 20px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+
+}
+
+.carta:hover {
+
+    transform: scale(1.05);
+
+}
+
+.selecionada {
+
+    border: 5px solid yellow;
+
+}
+
+.descartada {
+
+    opacity: 0.2;
+
+    transform: rotateY(180deg);
+
+}
+
+.botoes {
+
+    margin-top: 40px;
+
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+
+}
+
+button {
+
+    padding: 15px 25px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-size: 18px;
+
+}

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jodo de AIPIM</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div id="div_inicio" style="display: block;">
+
+        <div class="texto">
+
+            <h1>Detetive de Hardware</h1>
+            <p>Clique nas cartas que você acredita NÃO serem a resposta para descartá-las e selecione a resposta final.
+            </p>
+            <button onclick="iniciarJogo()">Jogar</button>
+
+        </div>
+
+    </div>
+
+
+    <div id="div_comp1" style="display: none;">
+
+        <div class="texto">
+
+            <h1>Componente 1</h1>
+
+            <div class="dicas">
+
+                <p>• Coordena outras partes do computador</p>
+                <p>• Executa instruções em sequência</p>
+                <p>• Trabalha junto com registradores e ULA</p>
+
+            </div>
+
+            <div class="cartas" id="div_cartas1"></div>
+
+            <div class="botoes">
+
+                <button onclick="descartar()">Descartar Palavras</button>
+
+                <button onclick="respostaFinal('CPU', 'div_comp1', 'div_comp2')">Escolher Resposta Final</button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div id="div_comp2" style="display: none;">
+
+        <div class="texto">
+
+            <h1>Componente 2</h1>
+
+            <div class="dicas">
+
+                <p>• Seu conteúdo desaparece sem energia</p>
+                <p>• Armazena programas em uso</p>
+                <p>• É acessada constantemente pela CPU</p>
+
+            </div>
+
+            <div class="cartas" id="div_cartas2"></div>
+
+            <div class="botoes">
+
+                <button onclick="descartar()">
+                    Descartar Palavras
+                </button>
+
+                <button onclick="respostaFinal('RAM', 'div_comp2', 'div_comp3')">
+                    Escolher Resposta Final
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div id="div_comp3" style="display: none;">
+
+        <div class="texto">
+
+            <h1>Componente 3</h1>
+
+            <div class="dicas">
+
+                <p>• Realiza operações lógicas</p>
+                <p>• Utiliza portas lógicas</p>
+                <p>• Executa cálculos binários</p>
+
+            </div>
+
+            <div class="cartas" id="div_cartas3"></div>
+
+            <div class="botoes">
+
+                <button onclick="descartar()">Descartar Palavras</button>
+
+                <button onclick="respostaFinal('ULA', 'div_comp3', 'div_final')">Escolher Resposta Final</button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div id="div_final" style="display: none;">
+
+        <div class="texto">
+
+            <h1>Fim de jogo!</h1>
+
+            <div id="div_pontos"></div>
+
+            <button onclick="TentarDnv()">Jogar Novamente</button>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
+
+<script>
+
+    let componentes = [
+        'CPU',
+        'RAM',
+        'ROM',
+        'ULA',
+        'Registradores',
+        'Flash',
+        'DMA',
+        'Data Bus',
+        'Address Bus',
+    ];
+
+    let pontos = 0;
+
+
+    function iniciarJogo() {
+
+        div_inicio.style.display = 'none';
+
+        div_comp1.style.display = 'block';
+
+
+    }
+
+
+function carregarCartas() {
+
+    div_cartas1.innerHTML = '';
+
+    div_cartas2.innerHTML = '';
+
+    div_cartas3.innerHTML = '';
+
+    for (let i = 0; i < componentes.length; i++) {
+
+        div_cartas1.innerHTML += `
+
+        <div class="carta" onclick="marcarCarta(this)">
+            ${componentes[i]}
+        </div>
+
+        `;
+
+    }
+
+    for (let i = 0; i < componentes.length; i++) {
+
+        div_cartas2.innerHTML += `
+
+        <div class="carta" onclick="marcarCarta(this)">
+            ${componentes[i]}
+        </div>
+
+        `;
+
+    }
+
+    for (let i = 0; i < componentes.length; i++) {
+
+        div_cartas3.innerHTML += `
+
+        <div class="carta" onclick="marcarCarta(this)">
+            ${componentes[i]}
+        </div>
+
+        `;
+
+    }
+
+}
+
+
+    function marcarCarta(carta) {
+
+        carta.classList.toggle('selecionada');
+
+    }
+
+
+    function descartar() {
+
+        let selecionadas = document.querySelectorAll('.selecionada');
+
+        for (let i = 0; i < selecionadas.length; i++) {
+
+            selecionadas[i].classList.add('descartada');
+
+            selecionadas[i].classList.remove('selecionada');
+
+        }
+
+    }
+
+
+
+    function respostaFinal(respostaCorreta, telaAtual, proximaTela) {
+
+        let selecionadas = document.querySelectorAll('.selecionada');
+
+        if (selecionadas.length != 1) {
+
+            alert('Selecione apenas UMA carta!');
+
+            return;
+
+        }
+
+
+        if (selecionadas[0].innerText == respostaCorreta) {
+
+            pontos++;
+
+        } 
+
+        let cartasSelecionadas = document.querySelectorAll('.selecionada');
+
+        for (let i = 0; i < cartasSelecionadas.length; i++) {
+
+            cartasSelecionadas[i].classList.remove('selecionada');
+
+        }
+
+
+        document.getElementById(telaAtual).style.display = 'none';
+
+        document.getElementById(proximaTela).style.display = 'block';
+
+
+        div_pontos.innerHTML = `Pontuação final: ${pontos}`;
+
+    }
+
+    function TentarDnv() {
+
+        div_final.style.display = 'none';
+        div_inicio.style.display = 'block';
+
+        pontos = 0;
+
+        let cartas = document.querySelectorAll('.carta');
+
+        for (let i = 0; i < cartas.length; i++) {
+
+            cartas[i].classList.remove('selecionada');
+
+            cartas[i].classList.remove('descartada');
+
+        }
+
+    }
+
+    carregarCartas();
+
+</script>
